@@ -13,15 +13,15 @@ static int showbar            = 1;        /* 0 means no bar */
 static int viewontag         = 1;     /* Switch view on tag switch */
 static int topbar             = 1;        /* 0 means bottom bar */
 
-static const char *fonts[]          = { "Wuncon Siji", "Mononoki Nerd Font:size=9:antialias=true:autohint=true" };
-static const char dmenufont[]       =  "Mononoki Nerd Font:size=9:antialias=true:autohint=true";
-static char col_urgborder[]   = "#ff0000";
+static const char *fonts[]          = { "Wuncon Siji:size=10", "Mononoki Nerd Font:size=10:antialias=true:autohint=true" };
+static const char dmenufont[]       =  "Mononoki Nerd Font:size=10:antialias=true:autohint=true";
+static char col_urgborder[]         = "#ff0000";
 static char normbgcolor[]           = "#1d2021";
 static char normbordercolor[]       = "#252a30";
 static char normfgcolor[]           = "#a9c0c2";
-static char selfgcolor[]            = "#eeeeee";
-static char selbordercolor[]        = "#5ABB55";
-static char selbgcolor[]            = "#252a30"; //5ABB55
+static char selfgcolor[]            = "#83B9C8";
+static char selbordercolor[]        = "#83B9C8";
+static char selbgcolor[]            = "#303643"; //5ABB55
 static const unsigned int baralpha = 0xaa;
 
 static char *colors[][3] = {
@@ -32,9 +32,9 @@ static char *colors[][3] = {
 	[SchemeStatus]  = { normfgcolor, normbgcolor,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel]  = { selfgcolor, selbgcolor,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
 	[SchemeTagsNorm]  = { normfgcolor, normbgcolor,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-	[SchemeInfoSel]  = { selfgcolor, selbgcolor,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+	[SchemeInfoSel]  = { selfgcolor, normbgcolor,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
 	[SchemeInfoNorm]  = { normfgcolor, normbgcolor,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
-	[SchemeUrg]  = { selfgcolor, selbgcolor,  col_urgborder  },
+	[SchemeUrg]  = { selfgcolor, normbgcolor,  col_urgborder  },
 };
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
@@ -57,7 +57,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	// { "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "null class",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Deluge",  NULL,       NULL,       1 << 10,       0,           -1 },
 };
 
 /* layout(s) */
@@ -92,7 +92,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "termite", NULL };
 
 /*
