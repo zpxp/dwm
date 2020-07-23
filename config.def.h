@@ -13,22 +13,16 @@ static int showbar            = 1;        /* 0 means no bar */
 static int viewontag         = 1;     /* Switch view on tag switch */
 static int topbar             = 1;        /* 0 means bottom bar */
 
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { "Wuncon Siji", "Mononoki Nerd Font:size=9:antialias=true:autohint=true" };
+static const char dmenufont[]       =  "Mononoki Nerd Font:size=9:antialias=true:autohint=true";
 static char col_urgborder[]   = "#ff0000";
-static char col_cyan[]        = "#005577";
-static char col_gray1[]       = "#222222";
-static char col_gray2[]       = "#444444";
-static char col_gray3[]       = "#A7ADBA";
-static char col_gray4[]       = "#eeeeee";
-static char normbgcolor[]           = "#2B303B";
-static char normbordercolor[]       = "#444444";
-static char normfgcolor[]           = "#A7ADBA";
+static char normbgcolor[]           = "#1d2021";
+static char normbordercolor[]       = "#252a30";
+static char normfgcolor[]           = "#a9c0c2";
 static char selfgcolor[]            = "#eeeeee";
-static char selbordercolor[]        = "#005577";
-static char selbgcolor[]            = "#005577";
-static const unsigned int baralpha = 208;
-static const unsigned int borderalpha = OPAQUE;
+static char selbordercolor[]        = "#5ABB55";
+static char selbgcolor[]            = "#252a30"; //5ABB55
+static const unsigned int baralpha = 0xaa;
 
 static char *colors[][3] = {
        /*               fg           bg           border   */
@@ -36,21 +30,21 @@ static char *colors[][3] = {
 	[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 /* tagging */
 	[SchemeStatus]  = { normfgcolor, normbgcolor,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel]  = { selfgcolor, col_cyan,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-	[SchemeTagsNorm]  = { col_gray3, col_gray1,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-	[SchemeInfoSel]  = { col_gray4, col_cyan,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-	[SchemeInfoNorm]  = { col_gray3, col_gray1,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
-	[SchemeUrg]  = { col_gray4, col_cyan,  col_urgborder  },
+	[SchemeTagsSel]  = { selfgcolor, selbgcolor,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
+	[SchemeTagsNorm]  = { normfgcolor, normbgcolor,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+	[SchemeInfoSel]  = { selfgcolor, selbgcolor,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+	[SchemeInfoNorm]  = { normfgcolor, normbgcolor,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+	[SchemeUrg]  = { selfgcolor, selbgcolor,  col_urgborder  },
 };
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
-	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeStatus]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeTagsSel]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeTagsNorm]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeInfoSel]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeInfoNorm]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeNorm] = { OPAQUE, baralpha, OPAQUE },
+	[SchemeSel]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeStatus]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeTagsSel]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeTagsNorm]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeInfoSel]  = { OPAQUE, baralpha, OPAQUE },
+	[SchemeInfoNorm]  = { OPAQUE, baralpha, OPAQUE },
 };
 
 /* tagging */
