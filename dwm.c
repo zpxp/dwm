@@ -2034,6 +2034,10 @@ tagmon(const Arg *arg)
 {
 	if (!selmon->sel || !mons->next)
 		return;
+	if(selmon->sel->isfloating) {
+	  selmon->sel->x += m->mx - selmon->mx;
+	  selmon->sel->y += m->my - selmon->my;
+	}
 	sendmon(selmon->sel, dirtomon(arg->i));
 }
 
