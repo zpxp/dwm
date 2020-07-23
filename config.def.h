@@ -1,11 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
-static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static unsigned int borderpx  = 1;        /* border pixel of windows */
 static unsigned int gappx     = 5;        /* gaps between windows */
 static unsigned int snap      = 32;       /* snap pixel */
@@ -126,7 +121,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
@@ -161,25 +156,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Left,   focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_Right,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Left,   tagmon,         {.i = +1 } },
-	// { MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-	// { MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
-	// { MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
-	{ MODKEY,                       XK_equal,  incrgaps,       {.i = +1 } },
-	{ MODKEY,                       XK_minus,  incrgaps,       {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_equal,  incrogaps,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_minus,  incrogaps,      {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_equal,  incrigaps,      {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_minus,  incrigaps,      {.i = -1 } },
-	{ MODKEY,                       XK_bracketleft,      togglegaps,     {0} },
-	{ MODKEY|ShiftMask,             XK_bracketleft,      defaultgaps,    {0} },
-	// { MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } },
-	// { MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } },
-	// { MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } },
-	// { MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } },
-	// { MODKEY|Mod4Mask,              XK_y,      incrohgaps,     {.i = +1 } },
-	// { MODKEY|Mod4Mask,              XK_o,      incrohgaps,     {.i = -1 } },
-	// { MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
-	// { MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
+	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
+	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
