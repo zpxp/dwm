@@ -16,7 +16,7 @@ static const int usealtbar          = 1;        /* 1 means use non-dwm status ba
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
 
 static const char *fonts[]          = { "Wuncon Siji:size=10", "Mononoki Nerd Font:size=10:antialias=true:autohint=true" };
-static const char dmenufont[]       =  "Mononoki Nerd Font:size=10:antialias=true:autohint=true";
+static const char dmenufont[]       =  "Mononoki Nerd Font:size=16:antialias=true:autohint=true";
 static char col_urgborder[]         = "#ff0000";
 static char normbgcolor[]           = "#1d2021";
 static char normbordercolor[]       = "#252a30";
@@ -76,8 +76,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "rofi", "-show", "run", NULL };
-// static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+// static const char *dmenucmd[] = { "rofi", "-show", "run", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "termite", NULL };
 
 /*
