@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"*.mxx": "cpp",
+		"random": "c"
+	}
+}

@@ -49,8 +49,7 @@ static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int decorhints  = 1;    /* 1 means respect decoration hints */
 
-#include "grid.c"
-#include "centermaster.c"
+#include "layouts.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
@@ -59,6 +58,9 @@ static const Layout layouts[] = {
 	{ "|M|",      centeredmaster },
 	// { ">M>",      centeredfloatingmaster },
 	{ "HHH",      grid },
+	{ "[D]",      deck },
+	{ "[S]",      spiral },
+	{ "TTT",      bstack },
 	// { NULL,       NULL },
 };
 
@@ -144,9 +146,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Left,   focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_Right,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Left,   tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	{ MODKEY,                       XK_equal,      incrgaps,       {.i = +1 } },
 	{ MODKEY,                       XK_minus,      incrgaps,       {.i = -1 } },
 	{ MODKEY,                       XK_bracketright,      incrogaps,      {.i = +1 } },
