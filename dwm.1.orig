@@ -100,7 +100,6 @@ Sets monocle layout.
 .B Mod1\-space
 Toggles between current and previous layout.
 .TP
-<<<<<<< HEAD
 .B Mod1\-Control\-,
 Cycles backwards in layout list.
 <<<<<<<
@@ -116,8 +115,6 @@ Focus next window.
 .B Mod1\-Control\-.
 Cycles forwards in layout list.
 .TP
-=======
->>>>>>> parent of 20a894f... cycle layout
 .B Mod1\-j
 Focus next window.
 .TP
