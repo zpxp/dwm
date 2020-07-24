@@ -186,8 +186,10 @@ static Button buttons[] = {
 
 static const char *ipcsockpath = "/tmp/dwm.sock";
 static IPCCommand ipccommands[] = {
+  IPCCOMMAND(  view,                1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  comboview,                1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  toggleview,          1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  tag,                 1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  combotag,                 1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  toggletag,           1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  tagmon,              1,      {ARG_TYPE_UINT}   ),
