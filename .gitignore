@@ -1,5 +1,5 @@
 build/
 *.o
 config.h
-dwm
 *.orig
+dwm
