@@ -208,6 +208,7 @@ static void configurerequest(XEvent *e);
 static Monitor *createmon(void);
 static void cyclelayout(const Arg *arg);
 static void destroynotify(XEvent *e);
+static int numberOfSetBits(unsigned int i);
 static void detach(Client *c);
 static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
@@ -293,6 +294,7 @@ static void updatetitle(Client *c);
 static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
 static void view(const Arg *arg);
+static void viewandfocus(const Arg *arg, Client *c);
 static void warp(const Client *c);
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
@@ -383,16 +385,31 @@ keyrelease(XEvent *e) {
 }
 
 void
-combotag(const Arg *arg) {
-	if(selmon->sel && arg->ui & TAGMASK) {
-		if (combo) {
+combotag(const Arg *arg)
+{
+	if (selmon->sel && arg->ui & TAGMASK)
+	{
+		int numNewTags = numberOfSetBits(arg->ui);
+		if (combo)
+		{
 			selmon->sel->tags |= arg->ui & TAGMASK;
-		} else {
+		}
+		else
+		{
 			combo = 1;
 			selmon->sel->tags = arg->ui & TAGMASK;
 		}
-		focus(NULL);
-		arrange(selmon);
+		if (numNewTags == 1)
+		{
+			Client *c =selmon->sel;
+			// focus that tag
+			viewandfocus(arg, c);
+		}
+		else
+		{
+			focus(NULL);
+			arrange(selmon);
+		}
 	}
 }
 
@@ -2653,6 +2670,13 @@ view(const Arg *arg)
 	updatecurrentdesktop();
 }
 
+void viewandfocus(const Arg *arg, Client *c)
+{
+	view(arg);
+	focus(c);
+	restack(selmon);
+}
+
 void
 viewonmonitor(const Arg *arg, Monitor *m)
 {
@@ -2683,6 +2707,16 @@ viewonmonitor(const Arg *arg, Monitor *m)
 	m->sellt = m->pertag->sellts[m->pertag->curtag];
 	m->lt[m->sellt] = m->pertag->ltidxs[m->pertag->curtag][m->sellt];
 	m->lt[m->sellt^1] = m->pertag->ltidxs[m->pertag->curtag][m->sellt^1];
+}
+
+int
+numberOfSetBits(unsigned int i)
+{
+	// Java: use int, and use >>> instead of >>
+	// C or C++: use uint32_t
+	i = i - ((i >> 1) & 0x55555555);
+	i = (i & 0x33333333) + ((i >> 2) & 0x33333333);
+	return (((i + (i >> 4)) & 0x0F0F0F0F) * 0x01010101) >> 24;
 }
 
 void
