@@ -16,7 +16,7 @@ static const int usealtbar          = 1;        /* 1 means use non-dwm status ba
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
 
 static const char *fonts[]          = { "Wuncon Siji:size=10", "Mononoki Nerd Font:size=10:antialias=true:autohint=true" };
-static const char dmenufont[]       =  "Mononoki Nerd Font:size=10:antialias=true:autohint=true";
+static const char dmenufont[]       =  "Mononoki Nerd Font:size=16:antialias=true:autohint=true";
 static char col_urgborder[]         = "#ff0000";
 static char normbgcolor[]           = "#1d2021";
 static char normbordercolor[]       = "#252a30";
@@ -49,8 +49,7 @@ static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int decorhints  = 1;    /* 1 means respect decoration hints */
 
-#include "grid.c"
-#include "centermaster.c"
+#include "layouts.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
@@ -59,6 +58,10 @@ static const Layout layouts[] = {
 	{ "|M|",      centeredmaster },
 	// { ">M>",      centeredfloatingmaster },
 	{ "HHH",      grid },
+	{ "[D]",      deck },
+	{ "[S]",      spiral },
+	{ "TTT",      bstack },
+	// { NULL,       NULL },
 };
 
 /* key definitions */
@@ -75,7 +78,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[] = { "rofi", "-theme", "solarized","-font","siji 10","-show","run", NULL };
+// static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "termite", NULL };
 
 /*
@@ -109,19 +113,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Down,   focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_Up,     focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_u,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
-	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
-	// { MODKEY|ShiftMask,		     XK_comma,  cyclelayout,    {.i = -1 } },
-	// { MODKEY|ShiftMask,           XK_period, cyclelayout,    {.i = +1 } },
+	{ MODKEY,            		     XK_comma,  cyclelayout,    {.i = -1 } },
+	{ MODKEY,                       XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
@@ -145,11 +144,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_0,      combotag,       {.ui = ~0 } },
 	{ MODKEY,                       XK_Right,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_Left,   focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_Right,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_Left,   tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+	{ MODKEY|ShiftMask,             XK_Right,  shifttagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_Left,   shifttagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_equal,      incrgaps,       {.i = +1 } },
 	{ MODKEY,                       XK_minus,      incrgaps,       {.i = -1 } },
 	{ MODKEY,                       XK_bracketright,      incrogaps,      {.i = +1 } },
@@ -189,8 +185,10 @@ static Button buttons[] = {
 
 static const char *ipcsockpath = "/tmp/dwm.sock";
 static IPCCommand ipccommands[] = {
+  IPCCOMMAND(  view,                1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  comboview,                1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  toggleview,          1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  tag,                 1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  combotag,                 1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  toggletag,           1,      {ARG_TYPE_UINT}   ),
   IPCCOMMAND(  tagmon,              1,      {ARG_TYPE_UINT}   ),
