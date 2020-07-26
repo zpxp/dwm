@@ -399,10 +399,50 @@ combotag(const Arg *arg) {
 void
 comboview(const Arg *arg) {
 	unsigned newtags = arg->ui & TAGMASK;
-	if (combo) {
+	unsigned int occ;
+	Monitor *targetmon = selmon, *m = selmon;
+	Client *c;
+
+	for (c = m->clients; c; c = c->next)
+	{
+		occ |= c->tags;
+	}
+
+	if (!(occ & newtags || m->tagset[m->seltags] & newtags))
+	{
+		// first see if tag exists on any other mon
+		for (m = mons; m; m = m->next)
+		{
+			occ = 0;
+			for (c = m->clients; c; c = c->next)
+			{
+				occ |= c->tags;
+			}
+
+			if (occ & newtags || m->tagset[m->seltags] & newtags)
+			{
+				targetmon = m;
+				break;
+			}
+		}
+	}
+
+	if (targetmon != selmon)
+	{
+		unfocus(selmon->sel, 0);
+		selmon = targetmon;
+		focus(NULL);
+		// now do the warp
+		warp(selmon->sel);
+	}
+
+	if (combo)
+	{
 		selmon->tagset[selmon->seltags] |= newtags;
-	} else {
-		selmon->seltags ^= 1;	/*toggle tagset*/
+	}
+	else
+	{
+		selmon->seltags ^= 1; /*toggle tagset*/
 		combo = 1;
 		if (newtags)
 			selmon->tagset[selmon->seltags] = newtags;
