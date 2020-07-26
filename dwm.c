@@ -416,7 +416,7 @@ combotag(const Arg *arg)
 void
 comboview(const Arg *arg) {
 	unsigned newtags = arg->ui & TAGMASK;
-	unsigned int occ;
+	unsigned int occ = 0;
 	Monitor *targetmon = selmon, *m = selmon;
 	Client *c;
 
@@ -459,7 +459,7 @@ comboview(const Arg *arg) {
 	}
 	else
 	{
-		selmon->seltags ^= 1; /*toggle tagset*/
+		// selmon->seltags ^= 1; /*toggle tagset*/
 		combo = 1;
 		if (newtags)
 			selmon->tagset[selmon->seltags] = newtags;
