@@ -269,6 +269,7 @@ static void sigchld(int unused);
 static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
+static void shifttagmon(const Arg *arg);
 static void tile(Monitor *);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
@@ -2109,6 +2110,20 @@ tagmon(const Arg *arg)
 	focusmon(arg);
 }
 
+
+void
+shifttagmon(const Arg *arg)
+{
+	if (!selmon->sel || !mons->next)
+		return;
+	unsigned int tag = selmon->sel->tags;
+	Monitor *m = dirtomon(arg->i);
+	Arg viewarg = {.ui = tag};
+	viewonmonitor(&viewarg, m);
+	sendmon(selmon->sel, m);
+	focusmon(arg);
+}
+
 // void
 // tile(Monitor *m)
 // {
@@ -2589,40 +2604,45 @@ updatewmhints(Client *c)
 void
 view(const Arg *arg)
 {
-	int i;
-	unsigned int tmptag;
-
-	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
-		return;
-	selmon->seltags ^= 1; /* toggle sel tagset */
-	if (arg->ui & TAGMASK) {
-		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
-		selmon->pertag->prevtag = selmon->pertag->curtag;
-
-		if (arg->ui == ~0)
-			selmon->pertag->curtag = 0;
-		else {
-			for (i = 0; !(arg->ui & 1 << i); i++) ;
-			selmon->pertag->curtag = i + 1;
-		}
-	} else {
-		tmptag = selmon->pertag->prevtag;
-		selmon->pertag->prevtag = selmon->pertag->curtag;
-		selmon->pertag->curtag = tmptag;
-	}
-
-	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
-	selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag];
-	selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag];
-	selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt];
-	selmon->lt[selmon->sellt^1] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt^1];
-
+	viewonmonitor(arg, selmon);
 	if (selmon->showbar != selmon->pertag->showbars[selmon->pertag->curtag])
 		togglebar(NULL);
 
 	focus(NULL);
 	arrange(selmon);
 	updatecurrentdesktop();
+}
+
+void
+viewonmonitor(const Arg *arg, Monitor *m)
+{
+	int i;
+	unsigned int tmptag;
+
+	if ((arg->ui & TAGMASK) == m->tagset[m->seltags])
+		return;
+	m->seltags ^= 1; /* toggle sel tagset */
+	if (arg->ui & TAGMASK) {
+		m->tagset[m->seltags] = arg->ui & TAGMASK;
+		m->pertag->prevtag = m->pertag->curtag;
+
+		if (arg->ui == ~0)
+			m->pertag->curtag = 0;
+		else {
+			for (i = 0; !(arg->ui & 1 << i); i++) ;
+			m->pertag->curtag = i + 1;
+		}
+	} else {
+		tmptag = m->pertag->prevtag;
+		m->pertag->prevtag = m->pertag->curtag;
+		m->pertag->curtag = tmptag;
+	}
+
+	m->nmaster = m->pertag->nmasters[m->pertag->curtag];
+	m->mfact = m->pertag->mfacts[m->pertag->curtag];
+	m->sellt = m->pertag->sellts[m->pertag->curtag];
+	m->lt[m->sellt] = m->pertag->ltidxs[m->pertag->curtag][m->sellt];
+	m->lt[m->sellt^1] = m->pertag->ltidxs[m->pertag->curtag][m->sellt^1];
 }
 
 void
