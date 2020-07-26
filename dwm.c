@@ -405,7 +405,7 @@ comboview(const Arg *arg) {
 
 	for (c = m->clients; c; c = c->next)
 	{
-		occ |= c->tags;
+		occ |= c->tags == 255 ? 0 : c->tags;
 	}
 
 	if (!(occ & newtags || m->tagset[m->seltags] & newtags))
@@ -416,7 +416,7 @@ comboview(const Arg *arg) {
 			occ = 0;
 			for (c = m->clients; c; c = c->next)
 			{
-				occ |= c->tags;
+				occ |= c->tags == 255 ? 0 : c->tags;
 			}
 
 			if (occ & newtags || m->tagset[m->seltags] & newtags)
