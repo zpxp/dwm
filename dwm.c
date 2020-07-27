@@ -459,7 +459,7 @@ comboview(const Arg *arg) {
 	}
 	else
 	{
-		// selmon->seltags ^= 1; /*toggle tagset*/
+		selmon->seltags ^= 1; /*toggle tagset*/
 		combo = 1;
 		if (newtags)
 			selmon->tagset[selmon->seltags] = newtags;
