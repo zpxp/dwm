@@ -82,7 +82,7 @@ static const char *dmenucmd[] = { "rofi", "-theme", "solarized","-font","siji 10
 // static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *calcmd[]  = { "/bin/sh", "-c", "$HOME/.local/bin/cal", NULL };
-static const char *tunescmd[]  = { "/bin/sh", "-c", "ncmpcpp", NULL };
+static const char *tunescmd[]  = { "ncmpcpp", NULL };
 
 /*
  * Xresources preferences to load at startup
