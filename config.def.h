@@ -15,7 +15,7 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int usealtbar          = 1;        /* 1 means use non-dwm status bar */
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
 
-static const char *fonts[]          = { "Wuncon Siji:size=10", "Mononoki Nerd Font:size=10:antialias=true:autohint=true" };
+static const char *fonts[]          = { "Siji:size=10", "Mononoki Nerd Font:size=10:antialias=true:autohint=true" };
 static const char dmenufont[]       =  "Mononoki Nerd Font:size=16:antialias=true:autohint=true";
 static char col_urgborder[]         = "#ff0000";
 static char normbgcolor[]           = "#1d2021";
@@ -80,8 +80,9 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "rofi", "-theme", "solarized","-font","siji 10","-show","run", NULL };
 // static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "termite", NULL };
+static const char *termcmd[]  = { "st", NULL };
 static const char *calcmd[]  = { "/bin/sh", "-c", "$HOME/.local/bin/cal", NULL };
+static const char *tunescmd[]  = { "/bin/sh", "-c", "ncmpcpp", NULL };
 
 /*
  * Xresources preferences to load at startup
@@ -108,6 +109,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = calcmd } },
+	{ MODKEY,                       XK_m,      spawn,          {.v = tunescmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	// { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
