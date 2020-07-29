@@ -41,6 +41,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Deluge",  NULL,       NULL,       1 << 9,       0,           -1 },
+	{ "transmission",  NULL,       NULL,       1 << 9,       0,           -1 },
 };
 
 /* layout(s) */
@@ -152,6 +153,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Left,   focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_Right,  shifttagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Left,   shifttagmon,         {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_Right,  tagmon,         {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_Left,   tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_equal,      incrgaps,       {.i = +1 } },
 	{ MODKEY,                       XK_minus,      incrgaps,       {.i = -1 } },
 	{ MODKEY,                       XK_bracketright,      incrogaps,      {.i = +1 } },
