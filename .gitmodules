@@ -4,4 +4,4 @@
 
 [submodule "original/polybar-dwm-module"]
 	path = original/polybar-dwm-module
-	url = https://github.com/zpxp/polybar-dwm-module.git
+	url = https://github.com/mihirlad55/polybar-dwm-module.git
