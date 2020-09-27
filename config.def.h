@@ -42,6 +42,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Deluge",  NULL,       NULL,       1 << 9,       0,           -1 },
 	{ "transmission",  NULL,       NULL,       1 << 9,       0,           -1 },
+	{ "Peek",  NULL,       NULL,       NULL,       1,           -1 },
 };
 
 /* layout(s) */
