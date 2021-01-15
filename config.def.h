@@ -43,6 +43,7 @@ static const Rule rules[] = {
 	{ "Deluge",  NULL,       NULL,       1 << 9,       0,           -1 },
 	{ "transmission",  NULL,       NULL,       1 << 9,       0,           -1 },
 	{ "Peek",  NULL,       NULL,       NULL,       1,           -1 },
+	{ "Vulkan tut",  NULL,       NULL,       NULL,       1,           -1 },
 };
 
 /* layout(s) */
