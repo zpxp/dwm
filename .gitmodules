@@ -1,7 +1,3 @@
 [submodule "original/dwm"]
 	path = original/dwm
 	url = https://git.suckless.org/dwm
-
-[submodule "original/polybar-dwm-module"]
-	path = original/polybar-dwm-module
-	url = https://github.com/mihirlad55/polybar-dwm-module.git

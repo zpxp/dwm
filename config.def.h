@@ -86,6 +86,7 @@ static const char *dmenucmd[] = { "rofi", "-theme", "solarized","-font","siji 10
 static const char *termcmd[]  = { "st", NULL };
 static const char *calcmd[]  = { "/bin/sh", "-c", "$HOME/.local/bin/cal", NULL };
 static const char *tunescmd[]  = { "st", "ncmpcpp", NULL };
+static const char *calccmd[]  = { "st", "wcalc", NULL }; //XF86Calculator
 
 /*
  * Xresources preferences to load at startup
@@ -113,6 +114,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = calcmd } },
 	{ MODKEY,                       XK_m,      spawn,          {.v = tunescmd } },
+	{ 0,       /*XF86Calculator*/0x1008ff1d, spawn,          {.v = calccmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	// { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
